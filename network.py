@@ -21,7 +21,7 @@ class PolicyNetwork(nn.Module):
 class ValueNetwork(nn.Module):
     def __init__(self, env):
         super(ValueNetwork, self).__init__()
-        self.input_num = env.observation_space[0]
+        self.input_num = env.observation_space.shape[0]
         self.output_num = 1
         self.layers = nn.Sequential(
             nn.Linear(self.input_num, 20),
