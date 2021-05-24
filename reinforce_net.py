@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import gym
 import torch
+import os
 from torch import nn
 import network
 from network import PolicyNetwork, ValueNetwork
@@ -45,7 +46,10 @@ def train(episode=1000, learning_rate=1e-3):
             print(f"episode:{iter} reward:{total_reward}")
     fig = plt.figure()
     ax = fig.add_subplot(111, xlabel = "episode", ylabel='total rewards')
+    ax.set_title("update by episode")
     ax.plot(range(1, episode + 1), total_rewards)
+    save_dir = "./figure/"
+    plt.savefig(os.path.join(save_dir, 'update_by_episode'))
     plt.show()
 
 if __name__ == "__main__":
