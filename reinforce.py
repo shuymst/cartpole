@@ -25,11 +25,10 @@ def train(dim = "mid", alpha = 0.01, episode = 1000):
             states.append(next_state)
             state = next_state
         
-        total_reward_tmp = total_reward
+        g = total_reward
         for i, (s, a) in enumerate(zip(states, actions)):
-            g = total_reward_tmp
             theta = update(theta, s, a, g, alpha, dim)
-            total_reward_tmp -= rewards[i]
+            g -= rewards[i]
         total_rewards.append(total_reward)
         if iter % 100 == 0:
             print(f"episode:{iter} reward:{total_reward}")

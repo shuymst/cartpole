@@ -34,15 +34,14 @@ def train(episode=1000, learning_rate=1e-3):
             states.append(next_state)
             state = next_state
         
-        total_reward_tmp = total_reward
+        g = total_reward
         policy_loss = torch.zeros(1, dtype = torch.float32)
         value_loss = torch.zeros(1, dtype = torch.float32)
         for i, (s, a) in enumerate(zip(states, actions)): # パラメータ更新
-            g = total_reward_tmp
             delta = g - value_model(s)
             value_loss += delta * delta
             policy_loss += -delta.detach() * torch.log(policy_model(s)[a]) # model(s)[a] = pi(a|s)
-            total_reward_tmp -= rewards[i]
+            g -= rewards[i]
 
         value_loss /= len(states)
         policy_loss /= len(states)

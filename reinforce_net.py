@@ -31,12 +31,11 @@ def train(episode=1000, learning_rate=1e-3):
             states.append(next_state)
             state = next_state
         
-        total_reward_tmp = total_reward
+        g = total_reward
         loss = torch.zeros(1, dtype = torch.float32)
         for i, (s, a) in enumerate(zip(states, actions)):
-            g = total_reward_tmp
             loss += -g * torch.log(model(s)[a]) # model(s)[a] = pi(a|s)
-            total_reward_tmp -= rewards[i]
+            g -= rewards[i]
         loss /= len(states)
         optimizer.zero_grad()
         loss.backward()
