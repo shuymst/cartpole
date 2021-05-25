@@ -42,7 +42,7 @@ def train(episode=1000, learning_rate=1e-3):
             value_loss += delta * delta
             policy_loss += -delta.detach() * torch.log(policy_model(s)[a]) # model(s)[a] = pi(a|s)
             total_reward_tmp -= rewards[i]
-        #loss /= len(states)
+
         value_loss /= len(states)
         policy_loss /= len(states)
 
