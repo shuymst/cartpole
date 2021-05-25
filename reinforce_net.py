@@ -42,15 +42,18 @@ def train(episode=1000, learning_rate=1e-3):
         loss.backward()
         optimizer.step()
         total_rewards.append(total_reward)
-        if iter % 100 == 0:
-            print(f"episode:{iter} reward:{total_reward}")
+        #if iter % 100 == 0:
+            #print(f"episode:{iter} reward:{total_reward}")
+    return total_rewards
+
+def draw(episode = 1000):
+    total_rewards = train(episode = episode)
     fig = plt.figure()
     ax = fig.add_subplot(111, xlabel = "episode", ylabel='total rewards')
-    ax.set_title("update by episode")
+    ax.set_title("REINFORCE(neural net)")
     ax.plot(range(1, episode + 1), total_rewards)
     save_dir = "./figure/"
-    plt.savefig(os.path.join(save_dir, 'update_by_episode'))
-    plt.show()
+    plt.savefig(os.path.join(save_dir, 'reinforce_net.png'))
 
 if __name__ == "__main__":
-    train()
+    draw()

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import gym
 import torch
 from torch import nn
+import os
 import network
 from network import PolicyNetwork, ValueNetwork
 
@@ -40,12 +41,18 @@ def train(episode=1000, learning_rate=1e-3):
             state = next_state
 
         total_rewards.append(total_reward)
-        if iter % 100 == 0:
-            print(f"episode:{iter} reward:{total_reward}")
+        #if iter % 100 == 0:
+            #print(f"episode:{iter} reward:{total_reward}")
+    return total_rewards
+
+def draw(episode = 1000):
+    total_rewards = train(episode=episode)
     fig = plt.figure()
     ax = fig.add_subplot(111, xlabel = "episode", ylabel='total rewards')
+    ax.set_title("Actor Critic")
     ax.plot(range(1, episode + 1), total_rewards)
-    plt.show()
+    save_dir = "./figure/"
+    plt.savefig(os.path.join(save_dir, 'actor_critic.png'))
 
 if __name__ == "__main__":
-    train()
+    draw()
